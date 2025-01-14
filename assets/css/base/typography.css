@@ -1,0 +1,9 @@
+/* Estilos de textos globais */
+h1, h2, h3 {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #fffdfd;
+}

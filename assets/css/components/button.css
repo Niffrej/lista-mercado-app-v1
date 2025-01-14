@@ -1,0 +1,14 @@
+/* Estilos dos botões */
+button {
+  padding: 10px 15px;
+  border: none;
+  background: var(--primary);
+  color: rgb(20, 3, 248);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: var(--secondary);
+}

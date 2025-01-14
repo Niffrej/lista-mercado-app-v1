@@ -1,0 +1,10 @@
+/* Paleta de cores do site */
+:root {
+  --primary: #007bff;
+  --secondary: #0056b3;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --success: #28a745;
+  --light: #f8f8f8;
+  --dark: #333;
+}

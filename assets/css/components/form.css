@@ -1,0 +1,14 @@
+/* Estilos do formulário */
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+}
