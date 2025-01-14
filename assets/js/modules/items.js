@@ -1,28 +1,36 @@
-// items.js
-export const adicionarItem = (itemInput, quantidadeInput, precoInput, tabela, itemEditando) => {
-  const nomeItem = itemInput.value.trim();
-  const quantidade = Number(quantidadeInput.value);
-  const preco = parseFloat(precoInput.value);
-  const totalItem = (quantidade * preco).toFixed(2);
+import Storage from "./storage.js";
 
-  if (nomeItem && quantidade > 0 && preco > 0) {
-    if (itemEditando) {
-      // Editando item existente
-      itemEditando.cells[1].textContent = nomeItem;
-      itemEditando.cells[2].textContent = quantidade;
-      itemEditando.cells[3].textContent = `R$ ${preco.toFixed(2)}`;
-      itemEditando.cells[4].textContent = `R$ ${totalItem}`;
-    } else {
-      // Adicionando novo item
-      const row = tabela.insertRow();
-      row.innerHTML = `
-        <td><input type="checkbox" class="comprar"></td>
-        <td>${nomeItem}</td>
-        <td>${quantidade}</td>
-        <td>R$ ${preco.toFixed(2)}</td>
-        <td>R$ ${totalItem}</td>
-        <td><button class="editar">Editar</button><button class="remover">Remover</button></td>
-      `;
-    }
+const Items = {
+  items: Storage.getItems(),
+
+  addItem: (produto, quantidade, preco) => {
+    const novoItem = {
+      id: Date.now(),
+      produto,
+      quantidade: Number(quantidade),
+      preco: Number(preco),
+      comprado: false
+    };
+    Items.items.push(novoItem);
+    Storage.saveItems(Items.items);
+    return novoItem;
+  },
+
+  removeItem: (id) => {
+    Items.items = Items.items.filter(item => item.id !== id);
+    Storage.saveItems(Items.items);
+  },
+
+  toggleCompra: (id) => {
+    Items.items = Items.items.map(item =>
+      item.id === id ? { ...item, comprado: !item.comprado } : item
+    );
+    Storage.saveItems(Items.items);
+  },
+
+  calcularTotal: () => {
+    return Items.items.reduce((total, item) => total + item.preco * item.quantidade, 0).toFixed(2);
   }
 };
+
+export default Items;

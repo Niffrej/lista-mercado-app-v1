@@ -1,15 +1,33 @@
-// ui.js
-export const limparCampos = (itemInput, quantidadeInput, precoInput) => {
-  itemInput.value = '';
-  quantidadeInput.value = 1;
-  precoInput.value = '';
-};
+import Items from "./items.js";
 
-export const atualizarBotao = (btnAdicionar, itemEditando) => {
-  // Atualiza o texto do botão dependendo se está editando ou não
-  if (itemEditando) {
-    btnAdicionar.textContent = 'Editar';  // Muda para "Editar" quando editando
-  } else {
-    btnAdicionar.textContent = 'Adicionar';  // Caso contrário, mantém "Adicionar"
+const UI = {
+  renderizarLista: () => {
+    $("#lista-itens tbody").empty();
+    Items.items.forEach(UI.adicionarItemNaTabela);
+    UI.atualizarTotal();
+  },
+
+  adicionarItemNaTabela: (item) => {
+    const row = `
+      <tr data-id="${item.id}">
+        <td><input type="checkbox" class="toggle-compra" ${item.comprado ? "checked" : ""}></td>
+        <td class="${item.comprado ? "item-comprado" : ""}">${item.produto}</td>
+        <td>${item.quantidade}</td>
+        <td>R$ ${item.preco.toFixed(2)}</td>
+        <td>R$ ${(item.quantidade * item.preco).toFixed(2)}</td>
+        <td><button class="remover">🗑️</button></td>
+      </tr>
+    `;
+    $("#lista-itens tbody").append(row);
+  },
+
+  atualizarTotal: () => {
+    $("#total-geral").text(`Total: R$ ${Items.calcularTotal()}`);
+  },
+
+  limparCampos: () => {
+    $("#item, #quantidade, #preco").val("");
   }
 };
+
+export default UI;
